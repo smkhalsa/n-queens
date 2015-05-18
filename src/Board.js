@@ -79,12 +79,29 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var counter = 0;
+      var thisRow = this.get(rowIndex);
+      for (var i=0; i<thisRow.length; i++){
+        if(thisRow[i]){
+          counter++;
+        }
+      }
+      return counter > 1;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      // go through each row of the board
+      for(var i=0; i<this.rows().length; i++) {
+      // if every row returns no conflict
+        if(this.hasRowConflictAt(i)) {
+        // return false
+          return true;
+        }
+      }
+      // else
+        // return true
+      return false;
     },
 
 
@@ -94,12 +111,41 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      //create a new array
+      var colArray = [];
+      //create a counter var set to 0
+      var counter = 0;
+        //for each row
+      for (var i=0; i<this.rows().length; i++){
+        //push the column index into the new array
+        colArray.push(this.rows()[i][colIndex]);
+      }
+      //for each item in new array
+      for (var i=0; i<colArray.length; i++){
+        //if item is 1,
+        if(colArray[i]){
+          //increment counter
+          counter++;
+        }
+      }
+      //return counter > 1
+      return counter>1;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      // iterate through board upto board.length
+      for(var i = 0; i<this.rows().length; i++) {
+        // check if board at index has a column conflict
+        if(this.hasColConflictAt(i)) {
+        // if true
+          // return true
+          return true;
+        }
+
+      }
+      // return false
+      return false;
     },
 
 
@@ -144,5 +190,6 @@
       });
     });
   };
+
 
 }());
