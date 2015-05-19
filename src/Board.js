@@ -142,7 +142,6 @@
           // return true
           return true;
         }
-
       }
       // return false
       return false;
@@ -155,12 +154,56 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      //create current column index var set to parameter
+      var colIndex = majorDiagonalColumnIndexAtFirstRow;
+      //create a counter which counts conflicts
+      var counter = 0;
+      //loop through each row of board
+      for (var i=0; i<this.rows().length; i++){
+        //if column index of current row is 1
+        if (this.rows()[i][colIndex]){
+          //then increment counter
+          counter++;
+        }
+        //increment column index
+        colIndex++;
+      }
+      //return counter > 1
+      return counter > 1;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      var context = this;
+      var checkDiagonal = function(colIndex) {
+        var colIndex = colIndex;
+        //create a counter which counts conflicts
+        var counter = 0;
+        //loop through each row of board
+        for (var i=0; i<context.rows().length; i++){
+          //if column index of current row is 1
+          if (context.rows()[i][colIndex] && colIndex > -1){
+            //then increment counter
+            counter++;
+          }
+          //increment column index
+          colIndex++;
+        }
+        //return counter > 1
+        return counter > 1;
+      };
+      // set new var to newLength which is -length + 2
+      var newLength = 2 - this.rows().length;
+      // for each column index of top row starting at newLength
+      for (var i = newLength; i<this.rows().length; i++){
+        // if hasMajorDiagonalConflictAt on the current column index
+        if (checkDiagonal(i)){
+          // return true;
+          return true;
+        }
+      }
+      // return false
+      return false;
     },
 
 
