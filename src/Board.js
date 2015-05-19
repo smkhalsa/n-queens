@@ -176,7 +176,6 @@
     hasAnyMajorDiagonalConflicts: function() {
       var context = this;
       var checkDiagonal = function(colIndex) {
-        var colIndex = colIndex;
         //create a counter which counts conflicts
         var counter = 0;
         //loop through each row of board
@@ -213,12 +212,50 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      // set colIndex to parameter
+      var colIndex = minorDiagonalColumnIndexAtFirstRow;
+      // set coutner to 0
+      var counter = 0;
+      // iterate through the columns of the first row
+      for(var i = 0; i < this.rows().length; i++) {
+        // if value
+        if(this.rows()[i][colIndex]) {
+          // increment counter
+          counter ++;
+        }
+        // decrement colIndex
+        colIndex --;
+
+      }
+      // return counter > 1
+      return counter > 1;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      var context = this;
+      var checkDiagonal = function(colIndex){
+        var counter = 0;
+        for(var i = 0; i < context.rows().length; i++) {
+          if(context.rows()[i][colIndex]) {
+            counter ++;
+          }
+          colIndex --;
+        }
+        return counter > 1;
+      };
+      //set newLength to this length + (this length -2)
+      var newLength = this.rows().length + this.rows().length - 2;
+      // iterate through first row up to newLength
+      for (var i=0; i<newLength; i++){
+        // if checkDiagonal at value
+        if( checkDiagonal(i) ){
+          // increment counter
+          return true;
+        }
+      }
+      // return counter > 1
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
