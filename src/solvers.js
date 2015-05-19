@@ -21,20 +21,53 @@ if   > max found
  */
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  // var solution = undefined; //fixme
 
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  return solution;
+  // console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+  // return solution;
+  //
 };
 
 
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  // var solutionCount = undefined; //fixme
 
-  console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
-  return solutionCount;
+  // console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
+  // return solutionCount;
+
+  // create new board of size n
+  var board = new Board({n:n});
+  // create solutionBoards and set it 0
+  var solutionBoards = 0;
+  // create function findValidPaths and receives board and current row index of board as parameter
+  var findValidPaths = function(board, rowIndex) {
+
+    // for each index of row
+    for(var i=0; i<n; i++) {
+      // if no conflicts at this index
+      board.togglePiece(rowIndex, i);
+      if(!board.hasColConflictAt(i)) {
+        // if row index = n
+        if(rowIndex === n-1) {
+          // increment solutionBoards
+          solutionBoards ++;
+        // else
+        } else {
+          // call recursively passing in updated board and current row index +1;
+          findValidPaths(board, rowIndex + 1);
+        }
+      }
+      // untoggle piece
+      board.togglePiece(rowIndex, i);
+      // console.log('untoggling', board.rows()[rowIndex][i], 'col index is ', i);
+    }
+  };
+  // findValidPaths(board, rowIndex)
+  findValidPaths(board, 0);
+  // return solutionBoards
+  return solutionBoards;
 };
 
 
